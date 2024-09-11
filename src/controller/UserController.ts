@@ -6,13 +6,14 @@ import { CatchError } from "../error/CatchError"
 export class UserController {
 
     catchError = new CatchError()
+
     public getUsers = async (req: Request, res: Response) => {
         try {
             const q = req.query.q as string | undefined
 
             const userBusiness = new UserBusiness()
             const output = await userBusiness.getUsers(q)
-    
+
             res.status(200).send(output)
         } catch (error) {
             this.catchError.catchError(error, res)
@@ -30,7 +31,7 @@ export class UserController {
 
             const userBusiness = new UserBusiness()
             const output = await userBusiness.createUser(input)
-    
+
             res.status(201).send(output)
         } catch (error) {
             this.catchError.catchError(error, res)
