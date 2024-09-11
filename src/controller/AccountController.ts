@@ -1,48 +1,32 @@
 import { Request, Response } from "express"
 import { AccountBusiness } from "../business/AccountBusiness"
+import { CatchError } from "../error/CatchError"
 
 export class AccountController {
+
+    catchError = new CatchError()
+
     public getAccounts = async (req: Request, res: Response) => {
         try {
             const accountBusiness = new AccountBusiness()
             const output = await accountBusiness.getAccounts()
-    
+
             res.status(200).send(output)
         } catch (error) {
-            console.log(error)
-    
-            if (req.statusCode === 200) {
-                res.status(500)
-            }
-    
-            if (error instanceof Error) {
-                res.send(error.message)
-            } else {
-                res.send("Erro inesperado")
-            }
+            this.catchError.catchError(error, res)
         }
     }
 
     public getAccountBalance = async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            
+
             const accountBusiness = new AccountBusiness()
             const output = await accountBusiness.getAccountBalance(id)
-    
+
             res.status(200).send(output)
         } catch (error) {
-            console.log(error)
-    
-            if (req.statusCode === 200) {
-                res.status(500)
-            }
-    
-            if (error instanceof Error) {
-                res.send(error.message)
-            } else {
-                res.send("Erro inesperado")
-            }
+            this.catchError.catchError(error, res)
         }
     }
 
@@ -55,20 +39,10 @@ export class AccountController {
 
             const accountBusiness = new AccountBusiness()
             const output = await accountBusiness.createAccount(input)
-    
+
             res.status(201).send(output)
         } catch (error) {
-            console.log(error)
-    
-            if (res.statusCode === 200) {
-                res.status(500)
-            }
-    
-            if (error instanceof Error) {
-                res.send(error.message)
-            } else {
-                res.send("Erro inesperado")
-            }
+            this.catchError.catchError(error, res)
         }
     }
 
@@ -84,17 +58,7 @@ export class AccountController {
 
             res.status(200).send(output)
         } catch (error) {
-            console.log(error)
-    
-            if (res.statusCode === 200) {
-                res.status(500)
-            }
-    
-            if (error instanceof Error) {
-                res.send(error.message)
-            } else {
-                res.send("Erro inesperado")
-            }
+            this.catchError.catchError(error, res)
         }
     }
 }

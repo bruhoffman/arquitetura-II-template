@@ -23,26 +23,26 @@ export class UserBusiness {
         const { id, name, email, password } = input
 
         if (typeof id !== "string") {
-            throw new BadRequestError("'id' deve ser string")
+            throw new BadRequestError("'id' deve ser string!")
         }
 
         if (typeof name !== "string") {
-            throw new BadRequestError("'name' deve ser string")
+            throw new BadRequestError("'name' deve ser string!")
         }
 
         if (typeof email !== "string") {
-            throw new BadRequestError("'email' deve ser string")
+            throw new BadRequestError("'email' deve ser string!")
         }
 
         if (typeof password !== "string") {
-            throw new BadRequestError("'password' deve ser string")
+            throw new BadRequestError("'password' deve ser string!")
         }
 
         const userDatabase = new UserDatabase()
         const userDBExists = await userDatabase.findUserById(id)
 
         if (userDBExists) {
-            throw new BadRequestError("'id' já existe")
+            throw new BadRequestError("'id' já existe!")
         }
 
         const newUser = new User(
